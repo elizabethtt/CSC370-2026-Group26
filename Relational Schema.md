@@ -2,9 +2,10 @@
 
 USERS(
     user_id,
-    full_name,
-    reviews_made,
-    account_created
+    name,
+    email,
+    password,
+    date_joined
 )
 
 Primary Key:
@@ -13,12 +14,9 @@ Primary Key:
 
 STUDY_SPOTS(
     spot_id,
-    spot_name,
-    spot_address,
-    overall_rating,
-    spot_type,
-    outlet_availability,
-    noise_level
+    name,
+    address,
+    type
 )
 
 Primary Key:
@@ -27,16 +25,18 @@ Primary Key:
 
 REVIEWS(
     review_id,
-    user_id,
-    spot_id,
-    review_text,
-    spot_rating,
-    review_date
+    author,
+    study_spot,
+    date,
+    rating,
+    outlet_availability,
+    noise_level,
+    description
 )
 
 Primary Key:
     review_id
 
 Foreign Keys:
-    user_id → USERS.user_id
-    spot_id → STUDY_SPOTS.spot_id
+    author → USERS.user_id
+    study_spot → STUDY_SPOTS.spot_id
