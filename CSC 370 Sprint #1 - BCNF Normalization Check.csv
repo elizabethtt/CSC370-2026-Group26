@@ -1,0 +1,6 @@
+Relation,Relevant Functional Dependency,Closure,Superkey?,BCNF?
+USERS,"user_id → name, email, password, date_joined","{user_id}+ = {user_id, name, email, password, date_joined}",Yes,Yes
+STUDY_SPOTS,"spot_id → name, address, type","{spot_id}+ = {spot_id, name, address, type} ",Yes,Yes
+REVIEWS,"review_id → author, study_spot, date, rating, 
+outlet_availability, noise_level, description","{review_id}+ = {review_id, author, study_spot, date, rating, 
+outlet_availability, noise_level, description}",Yes,Yes
