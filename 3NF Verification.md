@@ -82,3 +82,82 @@ Based on the identified key-derived functional dependencies, all three updated r
 Each identified dependency has a superkey on its left-hand side and therefore satisfies the 3NF condition.
 
 
+# Minimal Basis Analysis
+
+## Purpose
+
+The purpose of this analysis is to calculate a minimal basis for the functional dependencies identified in our updated relational schema.
+
+## 1. USERS
+
+Relation: `USERS(user_id, name, email, password, date_joined)`
+
+Original identified FD:
+
+`user_id → name, email, password, date_joined`
+
+Splitting the right-hand side gives:
+
+- `user_id → name`
+- `user_id → email`
+- `user_id → password`
+- `user_id → date_joined`
+
+Each FD has a singleton right-hand side. None is redundant relative to the others, and each left-hand side contains only one attribute.
+
+**Minimal basis for the identified dependencies:**
+
+`{user_id → name, user_id → email, user_id → password, user_id → date_joined}`
+
+## 2. STUDY_SPOTS
+
+Relation: `STUDY_SPOTS(spot_id, name, location, type)`
+
+Original identified FD:
+
+`spot_id → name, location, type`
+
+Splitting the right-hand side gives:
+
+- `spot_id → name`
+- `spot_id → location`
+- `spot_id → type`
+
+None is redundant relative to the others, and each left-hand side contains only one attribute.
+
+**Minimal basis for the identified dependencies:**
+
+`{spot_id → name, spot_id → location, spot_id → type}`
+
+## 3. REVIEWS
+
+Relation: `REVIEWS(review_id, user_id, spot_id, review_date, rating, outlet_availability, noise_level, description)`
+
+Original identified FD:
+
+`review_id → user_id, spot_id, review_date, rating, outlet_availability, noise_level, description`
+
+Splitting the right-hand side gives:
+
+- `review_id → user_id`
+- `review_id → spot_id`
+- `review_id → review_date`
+- `review_id → rating`
+- `review_id → outlet_availability`
+- `review_id → noise_level`
+- `review_id → description`
+
+None is redundant relative to the others, and each left-hand side contains only one attribute.
+
+**Minimal basis for the identified dependencies:**
+
+`{review_id → user_id, review_id → spot_id, review_id → review_date, review_id → rating, review_id → outlet_availability, review_id → noise_level, review_id → description}`
+
+## Conclusion
+
+We split all currently identified key-derived functional dependencies into dependencies with singleton right-hand sides.
+
+For these identified dependency sets, no dependency is redundant, and no determinant contains an unnecessary attribute.
+
+Therefore, the resulting sets are minimal bases for the currently identified functional dependencies.
+
