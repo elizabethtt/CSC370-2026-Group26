@@ -81,5 +81,4 @@ Based on the identified key-derived functional dependencies, all three updated r
 
 Each identified dependency has a superkey on its left-hand side and therefore satisfies the 3NF condition.
 
-N
 
