@@ -3,3 +3,4 @@
 - Expand our dataset to include more users, study spots and reviews
 - Refactor ER diagram to eliminate redundant "visits" relationship
 - Update SQL DDL code and relational schema to match ER diagram
+- Verify if the updated relational schema satisfies 3NF 
