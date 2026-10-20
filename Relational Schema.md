@@ -15,7 +15,7 @@ Primary Key:
 STUDY_SPOTS(
     spot_id,
     name,
-    address,
+    location,
     type
 )
 
@@ -25,9 +25,9 @@ Primary Key:
 
 REVIEWS(
     review_id,
-    author,
-    study_spot,
-    date,
+    user_id,
+    spot_id,
+    review_date,
     rating,
     outlet_availability,
     noise_level,
