@@ -42,7 +42,8 @@ LEFT JOIN reviews AS r ON r.spot_id = ss.spot_id
 GROUP BY ss.spot_id, ss.name, ss.type
 ORDER BY average_rating DESC, review_count DESC;
 
--- find spots whose average rating is above the overall average rating then calculates the average across all reviewed spots
+-- find spots whose average rating is above the overall average rating 
+-- then calculates the average across all reviewed spots
 SELECT
     ss.spot_id,
     ss.name AS study_spot,
