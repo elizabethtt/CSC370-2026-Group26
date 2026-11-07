@@ -27,3 +27,62 @@ CREATE TABLE `reviews` (
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`),
     FOREIGN KEY (`spot_id`) REFERENCES `study_spots`(`spot_id`)
 );
+
+-- Compare study spots by review count and rating statistics.
+SELECT
+    ss.spot_id,
+    ss.name AS study_spot,
+    ss.type,
+    COUNT(r.review_id) AS review_count,
+    ROUND(AVG(r.rating), 2) AS average_rating,
+    MIN(r.rating) AS lowest_rating,
+    MAX(r.rating) AS highest_rating
+FROM study_spots AS ss
+LEFT JOIN reviews AS r ON r.spot_id = ss.spot_id
+GROUP BY ss.spot_id, ss.name, ss.type
+ORDER BY average_rating DESC, review_count DESC;
+
+-- Find spots whose average rating is above the overall average rating.
+-- The subquery calculates the average across all reviewed spots.
+SELECT
+    ss.spot_id,
+    ss.name AS study_spot,
+    ss.type,
+    COUNT(r.review_id) AS review_count,
+    ROUND(AVG(r.rating), 2) AS average_rating
+FROM study_spots AS ss
+JOIN reviews AS r ON r.spot_id = ss.spot_id
+WHERE r.rating IS NOT NULL
+GROUP BY ss.spot_id, ss.name, ss.type
+HAVING AVG(r.rating) > (
+    SELECT AVG(r2.rating)
+    FROM reviews AS r2
+    WHERE r2.rating IS NOT NULL
+)
+ORDER BY average_rating DESC;
+
+-- Compare each study spot's average rating with the average for its spot type.
+-- HAVING limits the results to spots rated above their type's average.
+SELECT
+    ss.spot_id,
+    ss.name AS study_spot,
+    ss.type,
+    COUNT(r.review_id) AS review_count,
+    ROUND(AVG(r.rating), 2) AS average_rating,
+    ROUND((
+        SELECT AVG(r2.rating)
+        FROM study_spots AS ss2
+        JOIN reviews AS r2 ON r2.spot_id = ss2.spot_id
+        WHERE ss2.type = ss.type AND r2.rating IS NOT NULL
+    ), 2) AS type_average_rating
+FROM study_spots AS ss
+JOIN reviews AS r ON r.spot_id = ss.spot_id
+WHERE r.rating IS NOT NULL
+GROUP BY ss.spot_id, ss.name, ss.type
+HAVING AVG(r.rating) > (
+    SELECT AVG(r2.rating)
+    FROM study_spots AS ss2
+    JOIN reviews AS r2 ON r2.spot_id = ss2.spot_id
+    WHERE ss2.type = ss.type AND r2.rating IS NOT NULL
+)
+ORDER BY ss.type, average_rating DESC;
