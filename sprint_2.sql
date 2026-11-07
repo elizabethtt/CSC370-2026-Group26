@@ -1,4 +1,4 @@
--- Sprint 1 adjusted SQL code
+-- code imported from sprint 1
 
 CREATE TABLE `users` (
     `user_id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,7 +28,7 @@ CREATE TABLE `reviews` (
     FOREIGN KEY (`spot_id`) REFERENCES `study_spots`(`spot_id`)
 );
 
--- Compare study spots by review count and rating statistics.
+-- compares study spots by review count and rating stats
 SELECT
     ss.spot_id,
     ss.name AS study_spot,
@@ -42,8 +42,7 @@ LEFT JOIN reviews AS r ON r.spot_id = ss.spot_id
 GROUP BY ss.spot_id, ss.name, ss.type
 ORDER BY average_rating DESC, review_count DESC;
 
--- Find spots whose average rating is above the overall average rating.
--- The subquery calculates the average across all reviewed spots.
+-- find spots whose average rating is above the overall average rating then calculates the average across all reviewed spots
 SELECT
     ss.spot_id,
     ss.name AS study_spot,
@@ -61,8 +60,8 @@ HAVING AVG(r.rating) > (
 )
 ORDER BY average_rating DESC;
 
--- Compare each study spot's average rating with the average for its spot type.
--- HAVING limits the results to spots rated above their type's average.
+-- compare each study spots average rating with the average for its spot type
+-- HAVING limits the results to spots rated above their types average
 SELECT
     ss.spot_id,
     ss.name AS study_spot,
